@@ -86,7 +86,7 @@ def test_chat_completion_with_openai_library():
         model="gpt-3.5-turbo-instruct",
         messages=[
             {"role": "system", "content": "Book"},
-            {"role": "user", "content": "What is the best book"},
+            {"role": "user" , "content": "What is the best book"},
         ],
         max_tokens=8,
         seed=42,
