@@ -260,7 +260,7 @@ llama_token llama_sampler_sample(struct llama_sampler * smpl, struct llama_conte
 
     const int n_vocab = llama_n_vocab(llama_get_model(ctx));
 
-    // TODO: do not allocate each time
+    // TODO: do not allocate each time - manu
     std::vector<llama_token_data> cur;
     cur.reserve(n_vocab);
     for (llama_token token_id = 0; token_id < n_vocab; token_id++) {

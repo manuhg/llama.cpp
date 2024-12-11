@@ -515,15 +515,15 @@ void ggml_backend_load_all() {
     bool silent = false;
 #endif
 
-    ggml_backend_load_best("blas", silent);
-    ggml_backend_load_best("cann", silent);
-    ggml_backend_load_best("cuda", silent);
-    ggml_backend_load_best("hip", silent);
-    ggml_backend_load_best("kompute", silent);
+    //ggml_backend_load_best("blas", silent);
+    //ggml_backend_load_best("cann", silent);
+    //ggml_backend_load_best("cuda", silent);
+    //ggml_backend_load_best("hip", silent);
+    //ggml_backend_load_best("kompute", silent);
     ggml_backend_load_best("metal", silent);
-    ggml_backend_load_best("rpc", silent);
-    ggml_backend_load_best("sycl", silent);
-    ggml_backend_load_best("vulkan", silent);
-    ggml_backend_load_best("musa", silent);
+    //ggml_backend_load_best("rpc", silent);
+    //ggml_backend_load_best("sycl", silent);
+    //ggml_backend_load_best("vulkan", silent);
+    //ggml_backend_load_best("musa", silent);
     ggml_backend_load_best("cpu", silent);
 }

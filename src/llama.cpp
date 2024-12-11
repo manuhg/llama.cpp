@@ -17405,7 +17405,7 @@ static enum ggml_status llama_graph_compute(
 //
 static int llama_decode_internal(
          llama_context & lctx,
-           llama_batch   inp_batch) {
+           llama_batch   inp_batch) { //TODO-manu-read
 
     lctx.is_encoding = false;
 
@@ -19421,7 +19421,7 @@ int64_t llama_time_us(void) {
     return ggml_time_us();
 }
 
-struct llama_model * llama_load_model_from_file(
+struct llama_model * llama_load_model_from_file( //TODO-manu-read
         const char * path_model,
         struct llama_model_params   params) {
     ggml_time_init();
@@ -19445,46 +19445,6 @@ struct llama_model * llama_load_model_from_file(
         };
     }
 
-    if (params.rpc_servers != nullptr && params.rpc_servers[0] != '\0') {
-        // split the servers set them into model->rpc_servers
-        std::string servers(params.rpc_servers);
-        size_t pos = 0;
-        while ((pos = servers.find(',')) != std::string::npos) {
-            std::string server = servers.substr(0, pos);
-            model->rpc_servers.push_back(server);
-            servers.erase(0, pos + 1);
-        }
-        model->rpc_servers.push_back(servers);
-    }
-
-    // add RPC devices
-    if (!model->rpc_servers.empty()) {
-        ggml_backend_reg_t rpc_reg = ggml_backend_reg_by_name("RPC");
-        if (!rpc_reg) {
-            LLAMA_LOG_ERROR("%s: failed to find RPC backend\n", __func__);
-            llama_free_model(model);
-            return nullptr;
-        }
-
-        typedef ggml_backend_dev_t (*ggml_backend_rpc_add_device_t)(const char * endpoint);
-        ggml_backend_rpc_add_device_t ggml_backend_rpc_add_device_fn = (ggml_backend_rpc_add_device_t) ggml_backend_reg_get_proc_address(rpc_reg, "ggml_backend_rpc_add_device");
-        if (!ggml_backend_rpc_add_device_fn) {
-            LLAMA_LOG_ERROR("%s: failed to find RPC device add function\n", __func__);
-            llama_free_model(model);
-            return nullptr;
-        }
-
-        for (const std::string & server : model->rpc_servers) {
-            ggml_backend_dev_t dev = ggml_backend_rpc_add_device_fn(server.c_str());
-            if (dev) {
-                model->devices.push_back(dev);
-            } else {
-                LLAMA_LOG_ERROR("%s: failed to add RPC device for server '%s'\n", __func__, server.c_str());
-                llama_free_model(model);
-                return nullptr;
-            }
-        }
-    }
 
     // create list of devices to use with this model
     if (params.devices) {
@@ -19545,7 +19505,7 @@ void llama_free_model(struct llama_model * model) {
     delete model;
 }
 
-struct llama_context * llama_new_context_with_model(
+struct llama_context * llama_new_context_with_model( //TODO-manu-read
                  struct llama_model * model,
         struct llama_context_params   params) {
 
@@ -21470,7 +21430,7 @@ int32_t llama_decode(
     }
 
     return ret;
-}
+} //TODO-manu-read
 
 void llama_synchronize(struct llama_context * ctx) {
     ggml_backend_sched_synchronize(ctx->sched.get());
@@ -21712,8 +21672,8 @@ llama_token llama_token_fim_sep(const struct llama_model * model) {
 // tokenization
 //
 
-int32_t llama_tokenize(
-    const struct llama_model * model,
+int32_t llama_tokenize( //TODO-manu-read
+    const struct llama_model *  model,
                   const char * text,
                      int32_t   text_len,
                  llama_token * tokens,
