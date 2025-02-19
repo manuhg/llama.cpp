@@ -9370,26 +9370,26 @@ static bool llm_load_tensors(
 }
 
 // Returns 0 on success, -1 on error, and -2 on cancellation via llama_progress_callback
-static int llama_model_load(const std::string & fname, llama_model & model, llama_model_params & params) {
+static int llama_model_load(const std::string & fname, llama_model & model, llama_model_params & params) { //todo-manu-read
     model.t_start_us = ggml_time_us();
 
     try {
-        llama_model_loader ml(fname, params.use_mmap, params.check_tensors, params.kv_overrides);
+        llama_model_loader ml(fname, params.use_mmap, params.check_tensors, params.kv_overrides); //todo-manu-read lot of stuff happening here
 
         model.hparams.vocab_only = params.vocab_only;
 
         try {
-            llm_load_arch(ml, model);
+            llm_load_arch(ml, model); // simple. just get the name of tha rch
         } catch(const std::exception & e) {
             throw std::runtime_error("error loading model architecture: " + std::string(e.what()));
         }
         try {
-            llm_load_hparams(ml, model);
+            llm_load_hparams(ml, model); // todo-manu-read lot of stuff happening here
         } catch(const std::exception & e) {
             throw std::runtime_error("error loading model hyperparameters: " + std::string(e.what()));
         }
         try {
-            llm_load_vocab(ml, model);
+            llm_load_vocab(ml, model); // todo-manu-read lot of stuff happening here
         } catch(const std::exception & e) {
             throw std::runtime_error("error loading model vocabulary: " + std::string(e.what()));
         }
@@ -9407,7 +9407,7 @@ static int llama_model_load(const std::string & fname, llama_model & model, llam
             return 0;
         }
 
-        if (!llm_load_tensors(
+        if (!llm_load_tensors( // todo-manu-read lot of stuff happening here
             ml, model, params.n_gpu_layers, params.split_mode,  params.main_gpu, params.tensor_split, params.use_mlock,
             params.progress_callback, params.progress_callback_user_data
         )) {
@@ -19446,6 +19446,7 @@ struct llama_model * llama_load_model_from_file( //TODO-manu-read
     }
 
 
+    // todo-manu - add both gpu and npu in the following section
     // create list of devices to use with this model
     if (params.devices) {
         for (ggml_backend_dev_t * dev = params.devices; *dev; ++dev) {

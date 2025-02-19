@@ -146,7 +146,7 @@ int main(int argc, char ** argv) {
     LOG_INF("Number of chunks: %ld\n", chunks.size());
 
     llama_backend_init();
-    llama_numa_init(params.numa);
+    llama_numa_init(params.numa); // N/A for M1
 
     // load the model
     common_init_result llama_init = common_init_from_params(params);
