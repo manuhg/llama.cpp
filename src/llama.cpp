@@ -4426,7 +4426,7 @@ struct llama_model_loader {
             }
         }
 
-        struct ggml_context * ctx = NULL;
+        struct ggml_context * ctx = NULL; //mem buffer and a linked list of ggml objects which could be tensor, graph or work buffer
         struct gguf_init_params params = {
             /*.no_alloc = */ true,
             /*.ctx      = */ &ctx,
