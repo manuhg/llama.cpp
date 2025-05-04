@@ -234,3 +234,9 @@ configure_file(cmake/llama.pc.in
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/llama.pc"
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+add_custom_target(copy_llama_output ALL
+        COMMAND ../scripts/copy-release-products.sh
+        DEPENDS llama
+        COMMENT "Copying llama binary to output folder"
+)
