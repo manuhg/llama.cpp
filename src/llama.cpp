@@ -8466,6 +8466,7 @@ static int llama_prepare_sbatch(
             }
         }
     }
+    LLAMA_LOG_ERROR("==>INFO:n_tokens_all:%d, cparams.n_batch:%d, cparams.causal_attn:%d, cparams.n_ubatch:%d \n",n_tokens_all,cparams.n_batch,cparams.causal_attn, cparams.n_ubatch);
     GGML_ASSERT(n_tokens_all <= cparams.n_batch);
     GGML_ASSERT((cparams.causal_attn || cparams.n_ubatch >= n_tokens_all) && "non-causal attention requires n_ubatch >= n_tokens");
 
